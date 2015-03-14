@@ -17,7 +17,6 @@ exports.init = function (app) {
 }
 
 function socketHandler (socket) {
-
   countOnline++
   io.sockets.emit('online', countOnline)
 
@@ -37,7 +36,6 @@ function socketHandler (socket) {
     socket.emit('processing', 'stopping')
     halt(data)
   })
-
 }
 
 function save (code, socket) {
