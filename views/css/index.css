@@ -1,0 +1,67 @@
+#editor,
+#console {
+  width: 50%;
+  height: 100%;
+  box-sizing: border-box;
+  position: absolute;
+  top: 0;
+}
+
+/* ----- editor start ----- */
+#editor {
+  padding: 1em;
+  left: 0;
+  border-right: 1px solid #aaa;
+}
+
+#hint {
+  width: 80%;
+  margin: 0.5em auto;
+}
+.hint-error {
+  color: #f00;
+}
+.hint-success {
+  color: #0f0;
+}
+.hint-processing {
+  color: #00f;
+}
+
+#input {
+  width: 80%;
+  height: 60%;
+  display: block;
+  padding: 1em;
+  margin: 1em auto;
+  border: 1px solid #aaa;
+  font-size: 1em;
+  resize: none;
+}
+
+#submit {
+  display: block;
+  padding: 1em 2em;
+  margin: 1em auto;
+  background: #aaa;
+  color: #fff;
+  cursor: pointer;
+}
+#submit:hover {
+  background: #ccc;
+}
+/* ----- editor end ----- */
+
+/* ----- console start ----- */
+#console {
+  right: 0;
+  border-left: 1px solid #aaa;
+}
+#console h1 {
+  margin: 1em;
+}
+
+.console-spliter {
+  border-top: 1px solid #aaa;
+}
+/* ----- console end ----- */
