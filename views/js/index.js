@@ -1,6 +1,8 @@
 (function () {
 
   var socket = io('http://localhost:3000');
+  var pid;
+
   socket.on('processing', function (data) {
     hint(data, 0x00f);
   });
@@ -16,32 +18,49 @@
   socket.on('stderr', function (data) {
     decode(data, true);
   });
+  socket.on('pid', function (data) {
+    pid = data;
+  });
   socket.on('close', function (data) {
     $('#log').innerHTML += '<br><p>** exit with code ' + data + ' **</p><br>'; 
     $('#log').scrollTop = 999999999;
+    hint('done running code', 0x0f0);
+    pid = null;
+  });
+  socket.on('online', function (data) {
+    $('#online').innerHTML = data;
+  });
+  socket.on('running', function (data) {
+    $('#running').innerHTML = data;
   });
 
   $$.bind($('#run'), 'click', function (e) {
     if ($('#input').value != '') {
       $('#log').innerHTML = '';
-      hint('code submitted...', 0x0f0);
+      hint('code submitted', 0x0f0);
       socket.emit('run', $('#input').value);
     } else {
-      hint('no code to submit...', 0xf00);
+      hint('no code to submit', 0xf00);
     }
   });
 
   $$.bind($('#halt'), 'click', function (e) {
-    socket.emit('halt');
+    if (pid) {
+      socket.emit('halt', pid);
+    } else {
+      hint('no code running', 0xf00);
+    }
   });
 
   function hint (text, type) {
+    var punctuate = '';
     switch (type) {
       case 0xf00:
         if (!$('#hint').hasClass('hint-error')) {
           $('#hint').addClass('hint-error');
           $('#hint').removeClass('hint-success');
           $('#hint').removeClass('hint-processing');
+          punctuate = '!';
         }
         break;
       case 0x0f0:
@@ -49,6 +68,7 @@
           $('#hint').addClass('hint-success');
           $('#hint').removeClass('hint-error');
           $('#hint').removeClass('hint-processing');
+          punctuate = '~';
         }
         break;
       case 0x00f:
@@ -56,12 +76,13 @@
           $('#hint').addClass('hint-processing');
           $('#hint').removeClass('hint-success');
           $('#hint').removeClass('hint-error');
+          punctuate = '...';
         }
         break;
       default :
         break;
     }
-    $('#hint').innerHTML = text;
+    $('#hint').innerHTML = text + punctuate;
   }
 
   function decode (data, error) {

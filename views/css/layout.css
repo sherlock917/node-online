@@ -9,7 +9,8 @@
 
   font-family: '微软雅黑', sans-serif;
   font-weight: 100;
-  color: #333;
+  color: #0f0;
+  background: #000;
 
   transition: background 0.3s, color 0.3s;
 }

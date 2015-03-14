@@ -28,6 +28,7 @@ function server (req, res) {
   })
 }
 
+controller.init(io)
 io.on('connection', controller.socketHandler)
 
 app.listen(3000)

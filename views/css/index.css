@@ -11,7 +11,7 @@
 #editor {
   padding: 1em;
   left: 0;
-  border-right: 1px solid #aaa;
+  border-right: 1px solid #0f0;
 }
 
 #hint {
@@ -34,7 +34,7 @@
   display: block;
   padding: 1em;
   margin: 1em auto;
-  border: 1px solid #aaa;
+  border: 1px solid #0f0;
   font-size: 1em;
   resize: none;
 }
@@ -47,26 +47,28 @@
   width: 6em;
   height: 3em;
   margin: 1em auto;
-  background: #aaa;
-  color: #fff;
+  background: #0f0;
+  color: #000;
   cursor: pointer;
-}
-.button:hover {
-  background: #ccc;
 }
 /* ----- editor end ----- */
 
 /* ----- console start ----- */
 #console {
   right: 0;
-  border-left: 1px solid #aaa;
+  border-left: 1px solid #0f0;
 }
 #console h1 {
   margin: 1em;
 }
+#console h4 {
+  position: absolute;
+  right: 1em;
+  top: 1.8em;
+}
 
 .console-spliter {
-  border-top: 1px solid #aaa;
+  border-top: 1px solid #0f0;
 }
 
 #log {
