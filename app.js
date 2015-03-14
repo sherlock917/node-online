@@ -29,6 +29,15 @@ function server (req, res) {
 }
 
 controller.init(io)
-io.on('connection', controller.socketHandler)
 
-app.listen(3000)
+var port = 3000
+app.listen(port)
+console.log('%s -- server started, listening at port %d',
+ (new Date()).toString().substring(0, 24),
+ port)
+
+
+
+
+
+

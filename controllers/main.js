@@ -5,13 +5,18 @@ var fs = require('fs'),
 var io,
     pool = {},
     countOnline = 0,
-    countRunning = 0
+    countRunning = 0,
+    countTotal = 0,
+    countSuccess = 0,
+    countFail = 0
 
 exports.init = function (app) {
   io = app
+  io.on('connection', socketHandler)
+  setInterval(log, 1800000)
 }
 
-exports.socketHandler = function (socket) {
+function socketHandler (socket) {
 
   countOnline++
   io.sockets.emit('online', countOnline)
@@ -45,6 +50,7 @@ function save (code, socket) {
       throw err
       socket.emit('error', 'error saving code!')
       countRunning--
+      countFail++
       io.sockets.emit('running', countRunning)
     }
   })
@@ -54,6 +60,7 @@ function run (file, socket) {
   socket.emit('success', 'code running')
   var childProcess = spawn('node', [file]).on('error', function (err) {
     countRunning--
+    countFail++
     io.sockets.emit('running', countRunning)
     socket.emit('error', err)
   })
@@ -65,6 +72,8 @@ function run (file, socket) {
   })
   childProcess.on('close', function (code) {
     countRunning--
+    countTotal++
+    countSuccess++
     io.sockets.emit('running', countRunning)
     socket.emit('close', code)
     exec('rm ' + pool[childProcess.pid].fileName, function (err, stdout, stderr) {
@@ -84,10 +93,10 @@ function halt (pid) {
   pool[pid].kill('SIGHUP')
 }
 
-function generateTimeString () {
-  var time = (new Date()).toString().split(' ')
-  return time[1] + '-' + 
-         time[2] + '-' + 
-         time[3] + '-' + 
-         time[4].replace(/:/g, '-')
+function log () {
+  console.log('%s -- total run count: %d (%d success, %d fail)',
+    (new Date()).toString().substring(0, 24),
+    countTotal,
+    countSuccess,
+    countFail)
 }
