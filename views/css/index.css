@@ -30,7 +30,7 @@
 
 #input {
   width: 80%;
-  height: 60%;
+  height: 80%;
   display: block;
   padding: 1em;
   margin: 1em auto;
@@ -39,15 +39,19 @@
   resize: none;
 }
 
-#submit {
-  display: block;
-  padding: 1em 2em;
+.button-row {
+  text-align: center;
+}
+
+.button {
+  width: 6em;
+  height: 3em;
   margin: 1em auto;
   background: #aaa;
   color: #fff;
   cursor: pointer;
 }
-#submit:hover {
+.button:hover {
   background: #ccc;
 }
 /* ----- editor end ----- */
@@ -63,5 +67,17 @@
 
 .console-spliter {
   border-top: 1px solid #aaa;
+}
+
+#log {
+  width: 100%;
+  height: calc(100% - 4.5em - 1px);
+  padding: 0.5em;
+  box-sizing: border-box;
+  overflow: auto;
+}
+#log p[class="error"],
+#log p[class="error"] * {
+  color: #f00;
 }
 /* ----- console end ----- */

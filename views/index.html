@@ -11,14 +11,18 @@
 
   <section id="editor">
     <h1>Editor</h1>
+    <p class="button-row">
+      <button id="run" class="button">RUN</button>
+      <button id="halt" class="button">STOP</button>
+    </p>
     <p id="hint"></p>
     <textarea id="input"></textarea>
-    <button id="submit">SUBMIT</button>
   </section>
 
   <section id="console">
     <h1>Console</h1>
     <hr class="console-spliter">
+    <div id="log"></div>
   </section>
   
   <script src="/socket.io/socket.io.js"></script>
