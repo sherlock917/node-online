@@ -1,6 +1,7 @@
 (function () {
 
-  var socket = io('http://localhost:3000');
+
+  var socket = io(location.host);
   var pid;
 
   socket.on('processing', function (data) {
