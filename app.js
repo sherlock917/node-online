@@ -14,6 +14,8 @@ function server (req, res) {
     mime = 'text/javascript'
   } else if (mime == 'jpg' || mime == 'png') {
     mime = 'image/' + mime
+  } else if (mime == 'ttf') {
+    mime = 'application/octet-stream'
   } else {
     mime = 'text/' + mime
   }
