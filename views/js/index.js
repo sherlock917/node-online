@@ -53,6 +53,38 @@
     }
   });
 
+  var tab = 0;
+  var shift = false;
+
+  $$.bind($('#input'), 'keyup', function (e) {
+    if ($('#input').value == '') {
+      tab = 0;
+    }
+    if (e.keyCode == 13) {
+      appendTab();
+    } else if (e.keyCode == 16) {
+      shift = true;
+    } else if (e.keyCode == 221 && shift && tab > 0) {
+      shift = false;
+      removeTab();
+    }
+  });
+
+  function appendTab () {
+    var latest = $('#input').value.substr(-5).split('');
+    if (latest[latest.length - 2] == '{') {
+      tab += 2;
+    }
+    for (var i = 0; i < tab; i++) {
+      $('#input').value += ' ';
+    }
+  }
+
+  function removeTab () {
+    tab -= 2;
+    $('#input').value = $('#input').value.substring(0, $('#input').value.length - 3) + '}';
+  }
+
   function hint (text, type) {
     var punctuate = '';
     switch (type) {
