@@ -1,6 +1,6 @@
 @font-face {
-  font-family: main;
-  src: url('YaheiConsolasHybrid.ttf');
+  font-family: consola;
+  src: url('consola.ttf');
 }
 
 * {
@@ -12,7 +12,7 @@
   list-style: none;
   text-decoration: none;
 
-  font-family: main, '微软雅黑', sans-serif;
+  font-family: consola, '微软雅黑', sans-serif;
   font-weight: 100;
   color: #0f0;
   background: #000;
