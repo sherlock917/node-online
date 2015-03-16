@@ -49,7 +49,8 @@ var TrieTree = (function () {
             }
           }
         } else if (root[i].size > 0) {
-          current += ',' + i + __searchInner(root[i])
+          var r = '' + __searchInner(root[i])
+          current += ',' + i + r.replace(/,/g, ',' + i)
         }
         result = result.concat(current.split(','))
       }
@@ -63,3 +64,15 @@ var TrieTree = (function () {
     search : __search
   }
 })()
+
+TrieTree.grow('fu')
+TrieTree.grow('fuc')
+TrieTree.grow('fuck')
+TrieTree.grow('fucky')
+TrieTree.grow('fuckyo')
+TrieTree.grow('fuckyou')
+TrieTree.grow('funny')
+TrieTree.grow('fun')
+TrieTree.grow('function')
+
+console.log(TrieTree.search('fu'))
