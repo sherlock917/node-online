@@ -8,7 +8,8 @@
   var socket,
       pid,
       tab = 0,
-      shift = false;
+      shift = false,
+      newLine = false;
 
   // inits socket, binds event to handlers
   function initSocket() {
@@ -68,12 +69,16 @@
         tab = 0;
       }
       if (e.keyCode == 13) {
+        newLine = true;
         appendTab();
       } else if (e.keyCode == 16) {
         shift = true;
-      } else if (e.keyCode == 221 && shift && tab > 0) {
+      } else if (e.keyCode == 221 && shift && tab > 0 && newLine) {
+        newLine = false;
         shift = false;
         removeTab();
+      } else {
+        newLine = false;
       }
     });
   }
@@ -135,9 +140,9 @@
 
   function show (data, error) {
     if (error) {
-      $('#log').innerHTML += '<p class="error">' + data.replace(/\n/g, '<br>') + '</p>';
+      $('#log').innerHTML += '<div class="error">' + data.replace(/\n/g, '<br>') + '</div>';
     } else {
-      $('#log').innerHTML += '<p>' + data + '</p>';
+      $('#log').innerHTML += '<div>' + data + '</div>';
     }
     $('#log').scrollTop = 999999999;
   }
