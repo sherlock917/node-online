@@ -11,7 +11,9 @@
       tab = 0,
       shift = false,
       newLine = false,
-      keyStack = [];
+      candidates = [],
+      autofilling = false,
+      autofillIndex = 0;
 
   // inits socket, binds event to handlers
   function initSocket() {
@@ -80,14 +82,17 @@
         shift = false;
         removeTab();
       } else if (e.keyCode == 9) {
-        autofill();
-      } else if (e.keyCode == 8) {
-        keyStack.pop();
+        if (autofilling) {
+          switchAutoFill();
+        } else {
+          autofill();
+        }
       } else if (e.keyCode == 32) {
-        keyStack = [];
+        expandAutoFill();
       } else {
         newLine = false;
-        keyStack.push(String.fromCharCode(e.keyCode).toLowerCase());
+        autofilling = false;
+        candidates = [];
       }
     });
     $('#input').onkeydown = function (e) {
@@ -100,7 +105,32 @@
   // loads all javascript key works to TrieTree
   function initAutofill () {
     var keys = [
-      'function'
+      'break',
+      'do',
+      'instanceof',
+      'typeof',
+      'case',
+      'else',
+      'new',
+      'var',
+      'catch',
+      'finally',
+      'return',
+      'void',
+      'continue',
+      'for',
+      'switch',
+      'while',
+      'debugger',
+      'function',
+      'this',
+      'with',
+      'default',
+      'if',
+      'throw',
+      'delete',
+      'in',
+      'try'
     ];
     for (var i = 0; i < keys.length; i++) {
       TrieTree.grow(keys[i]);
@@ -108,11 +138,36 @@
   }
 
   function autofill () {
-    var str = ''
-    for (var i = 0; i < keyStack.length; i++) {
-      str += keyStack[i];
+    var query = $('#input').value.replace(/\n/g, ' ').split(' ').pop();
+    candidates = TrieTree.search(query);
+    applyAutoFill();
+  }
+
+  function applyAutoFill () {
+    if (candidates.length > 0) {
+      $('#input').value += candidates[0]
     }
-    $('#input').value += TrieTree.search(str)[0];
+    autofilling = true;
+  }
+
+  function switchAutoFill () {
+    if (candidates && candidates.length > 0) {
+      $('#input').value = $('#input').value.substring(0, $('#input').value.length - candidates[autofillIndex].length);
+      if (autofillIndex + 1 < candidates.length) {
+        autofillIndex++;
+      } else {
+        autofillIndex = 0;
+      }
+      $('#input').value += candidates[autofillIndex];
+    }
+  }
+
+  function expandAutoFill () {
+    var all = $('#input').value.split(' ');
+    var last = all[all.length - 2];
+    if (last.length > 1 && last.match(/^([a-zA-z_]{1})([\w]*)$/)) {
+      TrieTree.grow(last);
+    }
   }
 
   function appendTab () {

@@ -25,6 +25,9 @@ var TrieTree = (function () {
     var target = '__TrieTree'
     for (var i = 0; i < components.length; i++) {
       target += '["' + components[i] + '"]'
+      if (!eval(target)) {
+        return []
+      }
     }
     return __searchInner(eval(target))
   }
