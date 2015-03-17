@@ -3,13 +3,15 @@
   // functino to load
   initSocket();
   initDom();
+  initAutofill();
 
   // global variables
   var socket,
       pid,
       tab = 0,
       shift = false,
-      newLine = false;
+      newLine = false,
+      keyStack = [];
 
   // inits socket, binds event to handlers
   function initSocket() {
@@ -77,10 +79,40 @@
         newLine = false;
         shift = false;
         removeTab();
+      } else if (e.keyCode == 9) {
+        autofill();
+      } else if (e.keyCode == 8) {
+        keyStack.pop();
+      } else if (e.keyCode == 32) {
+        keyStack = [];
       } else {
         newLine = false;
+        keyStack.push(String.fromCharCode(e.keyCode).toLowerCase());
       }
     });
+    $('#input').onkeydown = function (e) {
+      if (e.keyCode == 9) {
+        e.preventDefault();
+      }
+    }
+  }
+
+  // loads all javascript key works to TrieTree
+  function initAutofill () {
+    var keys = [
+      'function'
+    ];
+    for (var i = 0; i < keys.length; i++) {
+      TrieTree.grow(keys[i]);
+    }
+  }
+
+  function autofill () {
+    var str = ''
+    for (var i = 0; i < keyStack.length; i++) {
+      str += keyStack[i];
+    }
+    $('#input').value += TrieTree.search(str)[0];
   }
 
   function appendTab () {
