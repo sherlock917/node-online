@@ -105,32 +105,10 @@
   // loads all javascript key works to TrieTree
   function initAutofill () {
     var keys = [
-      'break',
-      'do',
-      'instanceof',
-      'typeof',
-      'case',
-      'else',
-      'new',
-      'var',
-      'catch',
-      'finally',
-      'return',
-      'void',
-      'continue',
-      'for',
-      'switch',
-      'while',
-      'debugger',
-      'function',
-      'this',
-      'with',
-      'default',
-      'if',
-      'throw',
-      'delete',
-      'in',
-      'try'
+      'break', 'do', 'instanceof', 'typeof', 'case', 'else', 'new', 'var',
+      'catch', 'finally', 'return', 'void', 'continue', 'for', 'switch',
+      'while', 'debugger', 'function', 'this', 'with', 'default','if',
+      'throw', 'delete', 'in', 'try', 'require'
     ];
     for (var i = 0; i < keys.length; i++) {
       TrieTree.grow(keys[i]);
