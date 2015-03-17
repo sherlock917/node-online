@@ -116,7 +116,7 @@
   }
 
   function autofill () {
-    var query = $('#input').value.replace(/\n/g, ' ').split(' ').pop();
+    var query = $('#input').value.replace(/([\n()=])/g, ' ').split(' ').pop();
     candidates = TrieTree.search(query);
     applyAutoFill();
   }
@@ -142,7 +142,7 @@
 
   function expandAutoFill () {
     var all = $('#input').value.split(' ');
-    var last = all[all.length - 2];
+    var last = all[all.length - 2].replace(/=\w*/, '');
     if (last.length > 1 && last.match(/^([a-zA-z_]{1})([\w]*)$/)) {
       TrieTree.grow(last);
     }
