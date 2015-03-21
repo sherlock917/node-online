@@ -57,6 +57,10 @@
         $('#log').innerHTML = '';
         hint('code submitted', 0x0f0);
         socket.emit('run', $('#input').value);
+        if (window.screen.width < 1000) {
+          $('#totop').show();
+          document.body.scrollTop = window.screen.height;
+        }
       } else {
         hint('no code to submit', 0xf00);
       }
@@ -94,6 +98,10 @@
         autofilling = false;
         candidates = [];
       }
+    });
+    $$.bind($('#totop'), 'click', function (e) {
+      document.body.scrollTop = 0;
+      $('#totop').hide();
     });
     $('#input').onkeydown = function (e) {
       if (e.keyCode == 9) {
